@@ -1,0 +1,44 @@
+.DS_STORE
+
+# Virtualenv related
+
+# Django related 
+# setting file 
+# You should not put it in github
+chinamobile/settings/__init__.py 
+
+
+# static files 
+# for chinamobile, we need `static` directory
+#static/  
+
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+# Django stuff:
+*.log
+local_settings.py
+
+
+
+# sqlite3
+db.sqlite3
+
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+
