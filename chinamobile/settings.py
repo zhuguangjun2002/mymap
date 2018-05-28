@@ -159,7 +159,7 @@ LEAFLET_CONFIG = {
     #'SCALE': 'imperial'
     'SCALE': 'both',
     'ATTRIBUTION_PREFIX': '烟台麦卡托信息技术有限公司 © Maikator Co., Ltd. 2018',
-    'TILES': [('开放街道地图','http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{}),
+    'TILES': [('开放街道地图','https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{}),
               ('Mapbox街道地图', 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {'id': 'mapbox.streets', 'maxZoom': '18','accessToken': 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'})],
     'OVERLAYS': [('Mapbox卫星影像', 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {'id': 'mapbox.satellite', 'maxZoom': '18','accessToken':'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'})]
 }
