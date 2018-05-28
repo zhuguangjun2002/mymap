@@ -1,21 +1,22 @@
 # nginx
 
-cp sites-available/chinamobile.conf /etc/nginx/sites-available
+cp nginx/nginx.conf /etc/nginx/
+#cp nginx/sites-available/chinamobile.conf /etc/nginx/sites-available
 
 
 
 # supvisord
 
-sudo cp chinamobile.ini  /etc/supervisord.d/
+sudo cp supervisord/chinamobile.ini  /etc/supervisord.d/
 
 
 
 # gunicorn
-cp gunicorn_start.sh /webapps/chinamobile_django/bin/
+cp gunicorn/gunicorn_start.sh /webapps/chinamobile_django/bin/
 
 
 # Postgresql
 # 采用md5认证
 # user: chinamobile, password: chinamobile
 # user: postgres, password: postgres
-cp  pg_hba.conf  /var/lib/pgsql/data/
+cp  postgresql/pg_hba.conf  /var/lib/pgsql/data/
