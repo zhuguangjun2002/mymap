@@ -10,7 +10,7 @@ chinamobile/settings/__init__.py
 
 # static files 
 # for chinamobile, we need `static` directory
-#static/  
+staticfiles
 
 
 
@@ -41,4 +41,5 @@ db.sqlite3
 .venv
 venv/
 ENV/
+
 
