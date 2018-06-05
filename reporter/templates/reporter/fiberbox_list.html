@@ -2,12 +2,16 @@
 
 {% block content %}
     {% for box in boxes %}
-       <div class="post">
+       <div class="box">
            <div class="date">
-               <p>published: {{ box.updated_at }}</p>
+               <p>发布时间： {{ box.published_date }}</p>
            </div>
-           <p>{{ box.name }}</p>
-           <p>{{ box.location }}</p>
+           <h1><a href="{% url 'fiberbox_detail' pk=box.pk %}">{{ box.name }}</a></h1>
+           <p>创建者： {{ box.author.username }}</p>
+           <p>名称： {{ box.name }}</p>
+           <p>位置 {{ box.location }}</p>
+           <p>创建时间 {{ box.created_at }}</p>
+           <p>更新时间 {{ box.updated_at }}</p>
        </div>
     {% endfor %}
 {% endblock content %}

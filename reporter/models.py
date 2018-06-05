@@ -14,7 +14,7 @@ class FiberBox(models.Model):
         max_length=50, blank=True, verbose_name='村（社区居委会）')
     town = models.CharField(
         max_length=50, blank=True, verbose_name='乡镇（街道办事处）')
-    location = models.PointField(srid=4326, verbose_name='位置')
+    location = models.PointField(srid=4326,null=True, blank=True, verbose_name='位置')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     author = models.ForeignKey('auth.User',
@@ -26,6 +26,8 @@ class FiberBox(models.Model):
 
     def publish(self):
         self.published_date = timezone.now()
+        self.save()
+
 
     def __unicode__(self):
         return self.name

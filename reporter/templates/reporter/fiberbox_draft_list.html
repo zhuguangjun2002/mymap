@@ -1,0 +1,12 @@
+{% extends 'reporter/base.html' %}
+
+{% block content %}
+    {% for box in boxes %}
+       <div class="box">
+           <p class="date">created at: {{ box.created_date }}</p>
+           <h1><a href="{% url 'fiberbox_detail' pk=box.pk %}">{{ box.name }}</a></h1>
+           <p>{{ box.town|linebreaksbr }}</p>
+       </div>
+    {% endfor %}
+{% endblock content %}
+

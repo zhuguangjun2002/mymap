@@ -1,0 +1,20 @@
+{% extends 'reporter/base.html' %}
+
+{% block content %}
+   <div class="box">
+       {% if box.published_date %}
+           <div class="date">
+			   {{ box.published_date }}
+           </div>
+       {% else %}
+       <a class="btn btn-default" href="{% url 'fiberbox_publish' pk=box.pk %}">Publish</a>
+       {% endif %}
+       <h1>{{ box.name }}</h1>
+       {% if user.is_authenticated  %}
+           <a class="btn btn-default" href="{% url 'fiberbox_edit' pk=box.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+           <a class="btn btn-default" href="{% url 'fiberbox_remove' pk=box.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+       {% endif %}
+       <p>{{ box.town|linebreaksbr }}</p>
+   </div>
+{% endblock content %}
+

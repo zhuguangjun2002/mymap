@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
 from django.core.serializers import serialize
 from django.http import HttpResponse
@@ -16,8 +16,9 @@ from django.contrib.gis.measure import D
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
-from django.contrib.auth.decorators import login_required  
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from .forms import FiberBoxForm
 
 # Create your views here.
 
@@ -41,18 +42,17 @@ def county_datasets(request):
 def point_datasets(request):
     # points = serialize('geojson', FiberBox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
-    # add field to only display name, 
+    # add field to only display name,
     # not show `updated_at`,`created-at`, `pk`
     points = serialize('geojson',FiberBox.objects.all(),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
 def point_datasets_02(request):
     # 添加支持搜寻指定`基准点`
-    
     # 国贸大厦
     # pnt = GEOSGeometry('POINT (121.3997 37.5370)',4326)
 
-    # 国贸大厦  
+    # 国贸大厦
     # pnt = GEOSGeometry('POINT (121.3929 37.5258)',4326)
 
     # GeoJson格式
@@ -97,12 +97,11 @@ def get_location(request,lonlat):
 
     """
     # my_location = str2cords(lonlat)
-    
     print(lonlat)
     location = str2cords(lonlat)
     # return HttpResponse("my location is %s." % lonlat)
     # return HttpResponse("my location is %s." % location)
-    pnt = Point(location)    
+    pnt = Point(location)
     # GeoJSON 格式不好用
     # # pnt = GEOSGeometry('POINT (121.3929 37.5258)',4326)
     # # pnt = GEOSGeometry('{ "type": "Point", "coordinates": [ 5.000000, 23.000000 ] }') # GeoJSON
@@ -111,5 +110,59 @@ def get_location(request,lonlat):
     qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=1)))
     points = serialize('geojson', qs)
     return HttpResponse(points,content_type='json')
-    
-      
+
+@login_required
+def fiberbox_draft_list(request):
+    boxes = FiberBox.objects.filter(
+        published_date__isnull=True).order_by('updated_at')
+    return render(request, 'reporter/fiberbox_draft_list.html', {'boxes': boxes})
+
+
+@login_required
+def fiberbox_publish(request, pk):
+    fiberbox = get_object_or_404(FiberBox, pk=pk)
+    fiberbox.publish()
+    return redirect('fiberbox_detail', pk=pk)
+
+
+@login_required
+def fiberbox_new(request):
+    if request.method == "POST":
+        form = FiberBoxForm(request.POST)
+        if form.is_valid():
+            fiberbox = form.save(commit=False)
+            fiberbox.author = request.user
+            # fiberbox.published_date = timezone.now()
+            fiberbox.save()
+            return redirect('fiberbox_detail', pk=fiberbox.pk)
+    else:
+        form = FiberBoxForm()
+    return render(request, 'reporter/fiberbox_edit.html', {'form': form})
+
+
+def fiberbox_detail(request, pk):
+    box = get_object_or_404(FiberBox, pk=pk)
+    return render(request, 'reporter/fiberbox_detail.html', {'box': box})
+
+@login_required
+def fiberbox_edit(request, pk):
+    box = get_object_or_404(FiberBox, pk=pk)
+    if request.method == "POST":
+        form = FiberBoxForm(request.POST, instance=box)
+        if form.is_valid():
+            box = form.save(commit=False)
+            box.author = request.user
+            # box.published_date = timezone.now()
+            box.save()
+            return redirect('fiberbox_detail', pk=box.pk)
+    else:
+        form = FiberBoxForm(instance=box)
+    return render(request, 'reporter/fiberbox_edit.html', {'form': form})
+
+@login_required
+def fiberbox_remove(reques, pk):
+    # delete a fiberbox
+    box = get_object_or_404(FiberBox, pk=pk)
+    box.delete()
+    return redirect('fiberbox_list')
+

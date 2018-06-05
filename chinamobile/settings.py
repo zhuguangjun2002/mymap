@@ -231,3 +231,5 @@ CSRF_COOKIE_SECURE = False
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+LOGIN_REDIRECT_URL = '/'
