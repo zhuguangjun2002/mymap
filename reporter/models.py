@@ -7,7 +7,7 @@ from django.utils import timezone
 # Create your models here.
 
 
-class FiberBoxes(models.Model):
+class FiberBox(models.Model):
     name = models.CharField(max_length=20, verbose_name='名称')
     #address = models.CharField(max_length=50,blank=True,verbose_name='地址')
     village = models.CharField(
@@ -17,11 +17,14 @@ class FiberBoxes(models.Model):
     location = models.PointField(srid=4326, verbose_name='位置')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-    published_date = models.DateTimeField(blank=True, null=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    published_date = models.DateTimeField(blank=True, null=True,
+                                          verbose_name='发布日期')
+
+    objects = models.GeoManager()
 
     def publish(self):
         self.published_date = timezone.now()
-    objects = models.GeoManager()
 
     def __unicode__(self):
         return self.name
@@ -29,7 +32,7 @@ class FiberBoxes(models.Model):
     class Meta:
         verbose_name = '光纤箱'
         verbose_name_plural = "光纤箱"
-        #verbose_name_plural = " FiberBoxes"
+        #verbose_name_plural = " FiberBox"
         ordering = ("-updated_at", )
 
 

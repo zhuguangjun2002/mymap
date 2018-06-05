@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.core.serializers import serialize
 from django.http import HttpResponse
 from models import Counties
-from models import FiberBoxes
+from models import FiberBox
 
 
 from django.contrib.gis.geos import GEOSGeometry, LineString, Point
@@ -22,7 +22,7 @@ from django.utils import timezone
 # Create your views here.
 
 def fiberbox_list(request):
-    boxes = FiberBoxes.objects.filter(
+    boxes = FiberBox.objects.filter(
         updated_at__lte=timezone.now()).order_by('updated_at')
     return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
 
@@ -39,11 +39,11 @@ def county_datasets(request):
     return HttpResponse(counties,content_type='json')
 
 def point_datasets(request):
-    # points = serialize('geojson', FiberBoxes.objects.all())
+    # points = serialize('geojson', FiberBox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
     # add field to only display name, 
     # not show `updated_at`,`created-at`, `pk`
-    points = serialize('geojson',FiberBoxes.objects.all(),fields=('name','location'))
+    points = serialize('geojson',FiberBox.objects.all(),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
 def point_datasets_02(request):
@@ -69,16 +69,16 @@ def point_datasets_02(request):
     # pnt = GEOSGeometry('{ "type": "Point", "coordinates": location}') # GeoJSON
 
     # 方圆半径`1公里`范围内的点
-    qs = FiberBoxes.objects.filter(location__distance_lte=(pnt, D(km=1)))
+    qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=1)))
 
     # 方圆半径`500米`范围内的点
-    # qs = FiberBoxes.objects.filter(location__distance_lte=(pnt, D(km=0.5)))
+    # qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=0.5)))
 
     # 方圆半径`2公里`范围内的点
-    # qs = FiberBoxes.objects.filter(location__distance_lte=(pnt, D(km=2)))
+    # qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=2)))
 
     # 方圆半径`5公里`范围内的点
-    # qs = FiberBoxes.objects.filter(location__distance_lte=(pnt, D(km=5)))
+    # qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=5)))
 
     points = serialize('geojson', qs)
     return HttpResponse(points,content_type='json')
@@ -108,7 +108,7 @@ def get_location(request,lonlat):
     # # pnt = GEOSGeometry('{ "type": "Point", "coordinates": [ 5.000000, 23.000000 ] }') # GeoJSON
     # location = [121.3929,37.5258]
     # pnt = GEOSGeometry('{ "type": "Point", "coordinates": location}') # GeoJSON
-    qs = FiberBoxes.objects.filter(location__distance_lte=(pnt, D(km=1)))
+    qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=1)))
     points = serialize('geojson', qs)
     return HttpResponse(points,content_type='json')
     
