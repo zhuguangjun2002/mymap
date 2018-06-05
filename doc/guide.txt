@@ -10,6 +10,10 @@ source env/bin/activate
 # 安装依赖
 pip install -r mymap/requirements.txt
 
+# 准备项目环境
+cp project-secret/env-ubuntu mymap/.env
+或者
+cp project-secret/env-centos mymap/.env
 
 # 执行`迁移`操作
 python manage.py makemigrations
