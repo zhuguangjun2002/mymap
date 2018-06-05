@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     #'reporter'
     'reporter.apps.ReporterConfig', # 支持在`admin`,显示`app`中文名
     'rest_framework',
-    'sslserver',
+    #'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -225,9 +225,9 @@ JWT_AUTH = {
 
 # Enable HTTPS SSL
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
