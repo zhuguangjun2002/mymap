@@ -17,7 +17,8 @@ class FiberBox(models.Model):
     location = models.PointField(srid=4326, verbose_name='位置')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User',
+                               on_delete=models.CASCADE,verbose_name='创建者')
     published_date = models.DateTimeField(blank=True, null=True,
                                           verbose_name='发布日期')
 

@@ -1,3 +1,4 @@
+==========================================
 # 安装virtualenv环境
 virtualenv env
 
@@ -7,19 +8,39 @@ git clone git@github.com:zhuguangjun2002/mymap.git
 # 激活环境
 source env/bin/activate
 
-# 安装依赖
+# 安装`项目依赖`
 pip install -r mymap/requirements.txt
 
-# 准备项目环境
-cp project-secret/env-ubuntu mymap/.env
-或者
-cp project-secret/env-centos mymap/.env
+==========================================
 
+==========================================
+# 准备项目`环境配置文件env`
+cp project-secret/env-product mymap/.env
+或者
+cp project-secret/env-dev /.env
+
+注意：
+这里面需要调整`数据库名称`，`用户名`，`密码`，`DEBUG`参数等。
+==========================================
+
+==========================================
 # 执行`迁移`操作
 python manage.py makemigrations
 python manage.py  migrate
+==========================================
 
 
-# 进入项目，运行开放服务器：
+==========================================
+## `开发环境`搭建
+
 cd mymap/
-./run-server.sh 
+# 调整我们的`settings.py`文件，使其为`开发环境配置`
+cd chinamobile/
+cp settings-dev.py settings.py
+cd ../
+
+调整我们的`env`文件，里面需要修改`DEBUG=True`
+
+# 运行`开发服务器`
+./run-server.sh
+==========================================
