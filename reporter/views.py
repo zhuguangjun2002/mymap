@@ -17,8 +17,15 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 from django.contrib.auth.decorators import login_required  
+from django.utils import timezone
 
 # Create your views here.
+
+def fiberbox_list(request):
+    boxes = FiberBoxes.objects.filter(
+        updated_at__lte=timezone.now()).order_by('updated_at')
+    return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
+
 
 #@login_required
 class HomePageView(TemplateView):

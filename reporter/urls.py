@@ -3,12 +3,15 @@
 from django.conf.urls import include,url 
 
 #from views import HomePageView,county_datasets,point_datasets,point_datasets_02,get_location
-from views import MapPageView,county_datasets,point_datasets,point_datasets_02,get_location
+from views import HomePageView,MapPageView,county_datasets,point_datasets,point_datasets_02,get_location
+
+from . import views
 
 
 urlpatterns = [
   #url(r'^$',MapPageView.as_view(),name= 'map'),
   #url(r'^$',HomePageView.as_view(),name= 'home'),
+  url(r'^$', views.fiberbox_list, name='fiberbox_list'),
   url(r'^map/$',MapPageView.as_view(),name= 'map'),
   url(r'^county_data/$',county_datasets,name= 'county'),
   # zhuguangjun

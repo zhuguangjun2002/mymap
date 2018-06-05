@@ -1,0 +1,14 @@
+{% extends 'reporter/base.html' %}
+
+{% block content %}
+    {% for box in boxes %}
+       <div class="post">
+           <div class="date">
+               <p>published: {{ box.updated_at }}</p>
+           </div>
+           <p>{{ box.name }}</p>
+           <p>{{ box.location }}</p>
+       </div>
+    {% endfor %}
+{% endblock content %}
+
