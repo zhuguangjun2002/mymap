@@ -36,6 +36,9 @@ db.sqlite3
 
 # dotenv
 .env
+.env-dev
+.env-prod
+
 
 # virtualenv
 .venv
