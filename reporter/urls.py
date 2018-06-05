@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from django.conf.urls import include,url 
+from django.conf.urls import include,url
 
 #from views import HomePageView,county_datasets,point_datasets,point_datasets_02,get_location
 from views import HomePageView,MapPageView,county_datasets,point_datasets,point_datasets_02,get_location

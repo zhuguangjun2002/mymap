@@ -11,7 +11,6 @@ class FiberBoxes(models.Model):
     #address = models.CharField(max_length=50,blank=True,verbose_name='地址')
     village = models.CharField(max_length=50,blank=True,verbose_name='村（社区居委会）')
     town = models.CharField(max_length=50,blank=True,verbose_name='乡镇（街道办事处）')
-    
     location = models.PointField(srid=4326,verbose_name='位置')
     created_at = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True,verbose_name='更新时间')
@@ -20,7 +19,6 @@ class FiberBoxes(models.Model):
 
     def __unicode__(self):
         return self.name
-    
     class Meta:
         verbose_name='光纤箱'
         verbose_name_plural = "光纤箱"
