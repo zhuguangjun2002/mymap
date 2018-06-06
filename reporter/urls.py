@@ -5,9 +5,14 @@ from django.conf.urls import include,url
 from . import views
 
 urlpatterns = [
-  #url(r'^$',views.HomePageView.as_view(),name= 'home'),
-  url(r'^$', views.fiberbox_list, name='fiberbox_list'),
+
+  # 我们不`对外`提供`混合型`的`fiberbox_list`
+  #url(r'^$', views.fiberbox_list, name='fiberbox_list'),
   #url(r'^fiberbox/$', views.fiberbox_list, name='fiberbox_list'),
+  # 对外，只提供`firberbox_publish_list`;
+  # `登录通过`的`用户`，可以通过点击`草稿图标`，可以查看`草稿列表`
+  url(r'^$', views.fiberbox_publish_list, name='fiberbox_publish_list'),
+  #url(r'^fiberbox/publish/$', views.fiberbox_publish_list,name='fiberbox_publish_list'),
   url(r'^fiberbox/drafts/$', views.fiberbox_draft_list, name='fiberbox_draft_list'),
   url(r'^fiberbox/new/$', views.fiberbox_new, name='fiberbox_new'),
   url(r'^fiberbox/(?P<pk>\d+)/$', views.fiberbox_detail, name='fiberbox_detail'),

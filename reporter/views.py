@@ -27,6 +27,17 @@ def fiberbox_list(request):
         updated_at__lte=timezone.now()).order_by('updated_at')
     return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
 
+def fiberbox_publish_list(request):
+    boxes = Fiberbox.objects.filter(
+        published_date__isnull=False).order_by('published_date')
+    return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
+
+@login_required
+def fiberbox_draft_list(request):
+    boxes = Fiberbox.objects.filter(
+        published_date__isnull=True).order_by('updated_at')
+    return render(request, 'reporter/fiberbox_draft_list.html', {'boxes': boxes})
+
 @login_required
 def fiberbox_map(request):
     data_url = 'fiberbox_data'
@@ -43,10 +54,6 @@ def fiberbox_draft_map(request):
     data_url = 'fiberbox_draft_data'
     context = {'data_url': data_url }
     return render(request,'reporter/fiberbox_map.html',context)
-
-#@login_required
-class HomePageView(TemplateView):
-    template_name =  'index.html'
 
 def county_datasets(request):
     counties = serialize('geojson',Counties.objects.all())
@@ -142,11 +149,6 @@ def get_location(request,lonlat):
     points = serialize('geojson', qs)
     return HttpResponse(points,content_type='json')
 
-@login_required
-def fiberbox_draft_list(request):
-    boxes = Fiberbox.objects.filter(
-        published_date__isnull=True).order_by('updated_at')
-    return render(request, 'reporter/fiberbox_draft_list.html', {'boxes': boxes})
 
 
 @login_required
