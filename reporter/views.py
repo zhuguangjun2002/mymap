@@ -27,7 +27,7 @@ def fiberbox_list(request):
         updated_at__lte=timezone.now()).order_by('updated_at')
     return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
 
-
+@login_required
 def fiberbox_map(request):
     data_url = 'fiberbox_data'
     context = {'data_url': data_url }
@@ -38,6 +38,7 @@ def fiberbox_publish_map(request):
     context = {'data_url': data_url }
     return render(request,'reporter/fiberbox_map.html',context)
 
+@login_required
 def fiberbox_draft_map(request):
     data_url = 'fiberbox_draft_data'
     context = {'data_url': data_url }
@@ -51,6 +52,7 @@ def county_datasets(request):
     counties = serialize('geojson',Counties.objects.all())
     return HttpResponse(counties,content_type='json')
 
+@login_required
 def fiberbox_data(request):
     # points = serialize('geojson', Fiberbox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
@@ -67,6 +69,7 @@ def fiberbox_publish_data(request):
     points = serialize('geojson',Fiberbox.objects.filter(published_date__isnull=False),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
+@login_required
 def fiberbox_draft_data(request):
     # points = serialize('geojson', Fiberbox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
