@@ -2,10 +2,7 @@
 
 from django.conf.urls import include,url
 
-#from views import HomePageView,county_datasets,fiberbox_data,fiberbox_data_02,get_location
-
 from . import views
-
 
 urlpatterns = [
   #url(r'^$',views.HomePageView.as_view(),name= 'home'),
