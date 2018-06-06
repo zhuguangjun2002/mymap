@@ -18,7 +18,7 @@
 	<script type="text/javascript" src="{% static 'dist/leaflet.ajax.js' %}"> </script>
 	<script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"> </script>
 	<script type="text/javascript" src="{% static 'routing/leaflet-routing-machine.js' %}"> </script>
-{% endblock map_head %}
+{% endblock %}
 
 {% block map_body %}
 <h3>欢迎使用中国移动公司设备维护网站！</h3>
@@ -136,4 +136,4 @@
 	}
 </script>
 {% leaflet_map "gis" callback="window.our_layers" %}
-{% endblock map_body %}
+{% endblock %}
