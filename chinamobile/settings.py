@@ -169,7 +169,6 @@ REST_FRAMEWORK = {
         #　因为，可以只读，就不需要认证了。
         # 这个权限的意思是，只要认证通过，或者只读，就授权，就允许。
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        
         # README.md 要求添加。
         # 这样，只有那些认证了的，才有权限，没有被认证的，访问都拒绝。
         # 这是最简单的权限管理方式。

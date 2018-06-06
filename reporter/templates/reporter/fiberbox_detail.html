@@ -7,14 +7,15 @@
 			   {{ box.published_date }}
            </div>
        {% else %}
-       <a class="btn btn-default" href="{% url 'fiberbox_publish' pk=box.pk %}">Publish</a>
+       <a class="btn btn-default" href="{% url 'fiberbox_publish' pk=box.pk %}">发布</a>
        {% endif %}
        <h1>{{ box.name }}</h1>
        {% if user.is_authenticated  %}
            <a class="btn btn-default" href="{% url 'fiberbox_edit' pk=box.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
            <a class="btn btn-default" href="{% url 'fiberbox_remove' pk=box.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
        {% endif %}
-       <p>{{ box.town|linebreaksbr }}</p>
+       <p>街道办事处： {{ box.town|linebreaksbr }}</p>
+       <p>村或社区委员会： {{ box.village|linebreaksbr }}</p>
    </div>
 {% endblock content %}
 

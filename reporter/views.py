@@ -33,13 +33,16 @@ class HomePageView(TemplateView):
     template_name =  'index.html'
 
 class MapPageView(TemplateView):
-    template_name =  'map.html'
+    template_name =  'reporter/fiberbox_map.html'
+
+class DraftMapPageView(TemplateView):
+    template_name =  'reporter/fiberbox_draft_map.html'
 
 def county_datasets(request):
     counties = serialize('geojson',Counties.objects.all())
     return HttpResponse(counties,content_type='json')
 
-def point_datasets(request):
+def fiberbox_data(request):
     # points = serialize('geojson', FiberBox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
     # add field to only display name,
@@ -47,7 +50,15 @@ def point_datasets(request):
     points = serialize('geojson',FiberBox.objects.all(),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
-def point_datasets_02(request):
+def fiberbox_draft_data(request):
+    # points = serialize('geojson', FiberBox.objects.all())
+    # 控制生成的geojson,只包含客户感兴趣的字段。
+    # add field to only display name,
+    # not show `updated_at`,`created-at`, `pk`
+    points = serialize('geojson',FiberBox.objects.filter(published_date__isnull=True),fields=('name','location'))
+    return HttpResponse(points,content_type='json')
+
+def fiberbox_data_02(request):
     # 添加支持搜寻指定`基准点`
     # 国贸大厦
     # pnt = GEOSGeometry('POINT (121.3997 37.5370)',4326)

@@ -1,6 +1,36 @@
 {% extends 'reporter/base.html' %}
 
 {% block content %}
+    <div class="container">
+        <h2>地图</h2>
+        <!--<p>Map-marker icon: <span class="glyphicon glyphicon-map-marker"></span></p>-->
+        <!--<p>Map-marker icon as a link:-->
+          <!--<a href="#">-->
+            <!--<span class="glyphicon glyphicon-map-marker"></span>-->
+          <!--</a>-->
+        <!--</p>-->
+        <!--<p>Map-marker icon on a button:-->
+          <!--<button type="button" class="btn btn-default btn-sm">-->
+            <!--<span class="glyphicon glyphicon-map-marker"></span> Map-->
+          <!--</button>-->
+        <!--</p>-->
+        <!--<p>Map-marker icon on a styled link button:-->
+          <!--<a href="#" class="btn btn-info btn-lg">-->
+            <!--<span class="glyphicon glyphicon-map-marker"></span> Map-->
+          <!--</a>-->
+        <!--</p>-->
+        <p>`光纤箱设备`:
+            <a href="{% url 'fiberbox_map' %}" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-map-marker"></span>发布地图
+            </a>
+        </p>
+        <p>`光纤箱设备`:
+            <a href="{% url 'fiberbox_draft_map' %}" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-map-marker"></span>草稿地图
+            </a>
+        </p>
+    </div>
+
     {% for box in boxes %}
        <div class="box">
            <div class="date">

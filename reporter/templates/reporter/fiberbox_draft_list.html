@@ -1,11 +1,33 @@
 {% extends 'reporter/base.html' %}
 
 {% block content %}
+    <div class="container">
+        <h2>地图</h2>
+        <!--<p>`光纤箱设备`:-->
+            <!--<a href="{% url 'fiberbox_map' %}" class="btn btn-info btn-lg">-->
+              <!--<span class="glyphicon glyphicon-map-marker"></span>发布地图-->
+            <!--</a>-->
+        <!--</p>-->
+        <p>`光纤箱设备`:
+            <a href="{% url 'fiberbox_draft_map' %}" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-map-marker"></span>草稿地图
+            </a>
+        </p>
+    </div>
+
+
     {% for box in boxes %}
        <div class="box">
-           <p class="date">created at: {{ box.created_date }}</p>
+           <!--<p class="date">created at: {{ box.created_at }}</p>-->
+           <div class="date">
+               <p>创建时间： {{ box.created_at }}</p>
+           </div>
            <h1><a href="{% url 'fiberbox_detail' pk=box.pk %}">{{ box.name }}</a></h1>
-           <p>{{ box.town|linebreaksbr }}</p>
+           <!--<p>创建者： {{ box.author.username }}</p>-->
+           <!--<p>名称： {{ box.name }}</p>-->
+           <p>位置 {{ box.location }}</p>
+           <!--<p>创建时间 {{ box.created_at }}</p>-->
+           <p>更新时间 {{ box.updated_at }}</p>
        </div>
     {% endfor %}
 {% endblock content %}

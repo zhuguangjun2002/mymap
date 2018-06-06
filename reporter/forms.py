@@ -6,4 +6,4 @@ class FiberBoxForm(forms.ModelForm):
 
     class Meta:
         model =  FiberBox
-        fields = ('name', 'town')
+        fields = ('name', 'town','village')
