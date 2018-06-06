@@ -68,6 +68,20 @@ def fiberbox_data(request):
     points = serialize('geojson',Fiberbox.objects.all(),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
+def fiberbox_data_detail(request,pk):
+    # points = serialize('geojson', Fiberbox.objects.all())
+    # 控制生成的geojson,只包含客户感兴趣的字段。
+    # add field to only display name,
+    # not show `updated_at`,`created-at`, `pk`
+    points = serialize('geojson',Fiberbox.objects.filter(pk=pk),fields=('name','location'))
+    return HttpResponse(points,content_type='json')
+    # try:
+        # box = Fiberbox.objects.get(pk)
+        # boxes =  serialize('geojson',box,fields=('name','location'))
+        # return HttpResponse(boxes,content_type='json')
+    # except Fiberbox.DoesNotExist:
+        # return HttpResponse(None,content_type='json')
+
 def fiberbox_publish_data(request):
     # points = serialize('geojson', Fiberbox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。

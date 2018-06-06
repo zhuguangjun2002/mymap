@@ -26,6 +26,7 @@ urlpatterns = [
   url(r'^county_data/$',views.county_datasets,name= 'county'),
   # GeoJson Data
   url(r'^fiberbox_data/$', views.fiberbox_data, name = 'fiberbox_data'),
+  url(r'^fiberbox_data/(?P<pk>\d+)/$', views.fiberbox_data_detail, name='fiberbox_data_detail'),
   url(r'^fiberbox_publish_data/$', views.fiberbox_publish_data,name='fiberbox_publish_data'),
   url(r'^fiberbox_drafts_data/$', views.fiberbox_draft_data, name = 'fiberbox_draft_data'),
   url(r'^fiberbox_data_02/$', views.fiberbox_data_02, name = 'fiberbox_02'),
