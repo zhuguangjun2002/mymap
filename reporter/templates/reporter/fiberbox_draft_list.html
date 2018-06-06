@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <h2>地图</h2>
+        <h2>草稿地图</h2>
         <!--<p>`光纤箱设备`:-->
             <!--<a href="{% url 'fiberbox_map' %}" class="btn btn-info btn-lg">-->
               <!--<span class="glyphicon glyphicon-map-marker"></span>发布地图-->
@@ -14,8 +14,6 @@
             </a>
         </p>
     </div>
-
-
     {% for box in boxes %}
        <div class="box">
            <!--<p class="date">created at: {{ box.created_at }}</p>-->

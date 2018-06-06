@@ -17,7 +17,7 @@
                 <!--<a href="{% url 'fiberbox_map' %}" class="top-menu">-->
                   <!--<span class="glyphicon glyphicon-map-marker"></span>-->
                 <!--</a>-->
-                <p class="top-menu">您好！{{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+                <p class="top-menu">您好！{{ user.username }} <small>(<a href="{% url 'logout' %}">注销</a>)</small></p>
             {% else %}
                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
