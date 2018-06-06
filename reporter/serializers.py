@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import FiberBox
+from .models import Fiberbox
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -9,9 +9,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email', 'groups')
 
 
-class FiberBoxSerializer(serializers.ModelSerializer):
+class FiberboxSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FiberBox
+        model = Fiberbox
         fields = ('name','created_at','updated_at')
 
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib import admin
-from .models import FiberBox, Counties
+from .models import Fiberbox, Counties
 
 
 #from django.contrib.gis.db import OSMGeoAdmin
@@ -9,7 +9,7 @@ from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
 
-class FiberBoxAdmin(LeafletGeoAdmin):
+class FiberboxAdmin(LeafletGeoAdmin):
     #pass
     #list_display = ('name','created_at','updated_at','location')
     list_display = ('name','town','village','updated_at','published_date')
@@ -27,7 +27,7 @@ class CountiesAdmin(LeafletGeoAdmin):
     list_display = ('counties','codes') # see models.py, class Counties
 
 
-admin.site.register(FiberBox,FiberBoxAdmin)
+admin.site.register(Fiberbox,FiberboxAdmin)
 
 # 我们暂时不需要加入`乡镇`的`边界`
 #admin.site.register(Counties,CountiesAdmin)

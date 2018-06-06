@@ -47,3 +47,6 @@ ENV/
 
 # ctags
 tags
+
+# backupdata
+backup-data/

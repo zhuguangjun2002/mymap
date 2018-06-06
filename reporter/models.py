@@ -7,7 +7,7 @@ from django.utils import timezone
 # Create your models here.
 
 
-class FiberBox(models.Model):
+class Fiberbox(models.Model):
     name = models.CharField(max_length=20, verbose_name='名称')
     #address = models.CharField(max_length=50,blank=True,verbose_name='地址')
     village = models.CharField(
@@ -35,7 +35,7 @@ class FiberBox(models.Model):
     class Meta:
         verbose_name = '光纤箱'
         verbose_name_plural = "光纤箱"
-        #verbose_name_plural = " FiberBox"
+        #verbose_name_plural = " Fiberbox"
         ordering = ("-updated_at", )
 
 

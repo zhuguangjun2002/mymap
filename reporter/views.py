@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.core.serializers import serialize
 from django.http import HttpResponse
 from models import Counties
-from models import FiberBox
+from models import Fiberbox
 
 
 from django.contrib.gis.geos import GEOSGeometry, LineString, Point
@@ -18,12 +18,12 @@ from django.urls import reverse
 
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .forms import FiberBoxForm
+from .forms import FiberboxForm
 
 # Create your views here.
 
 def fiberbox_list(request):
-    boxes = FiberBox.objects.filter(
+    boxes = Fiberbox.objects.filter(
         updated_at__lte=timezone.now()).order_by('updated_at')
     return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
 
@@ -43,19 +43,19 @@ def county_datasets(request):
     return HttpResponse(counties,content_type='json')
 
 def fiberbox_data(request):
-    # points = serialize('geojson', FiberBox.objects.all())
+    # points = serialize('geojson', Fiberbox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
     # add field to only display name,
     # not show `updated_at`,`created-at`, `pk`
-    points = serialize('geojson',FiberBox.objects.all(),fields=('name','location'))
+    points = serialize('geojson',Fiberbox.objects.all(),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
 def fiberbox_draft_data(request):
-    # points = serialize('geojson', FiberBox.objects.all())
+    # points = serialize('geojson', Fiberbox.objects.all())
     # 控制生成的geojson,只包含客户感兴趣的字段。
     # add field to only display name,
     # not show `updated_at`,`created-at`, `pk`
-    points = serialize('geojson',FiberBox.objects.filter(published_date__isnull=True),fields=('name','location'))
+    points = serialize('geojson',Fiberbox.objects.filter(published_date__isnull=True),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
 def fiberbox_data_02(request):
@@ -80,16 +80,16 @@ def fiberbox_data_02(request):
     # pnt = GEOSGeometry('{ "type": "Point", "coordinates": location}') # GeoJSON
 
     # 方圆半径`1公里`范围内的点
-    qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=1)))
+    qs = Fiberbox.objects.filter(location__distance_lte=(pnt, D(km=1)))
 
     # 方圆半径`500米`范围内的点
-    # qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=0.5)))
+    # qs = Fiberbox.objects.filter(location__distance_lte=(pnt, D(km=0.5)))
 
     # 方圆半径`2公里`范围内的点
-    # qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=2)))
+    # qs = Fiberbox.objects.filter(location__distance_lte=(pnt, D(km=2)))
 
     # 方圆半径`5公里`范围内的点
-    # qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=5)))
+    # qs = Fiberbox.objects.filter(location__distance_lte=(pnt, D(km=5)))
 
     points = serialize('geojson', qs)
     return HttpResponse(points,content_type='json')
@@ -118,20 +118,20 @@ def get_location(request,lonlat):
     # # pnt = GEOSGeometry('{ "type": "Point", "coordinates": [ 5.000000, 23.000000 ] }') # GeoJSON
     # location = [121.3929,37.5258]
     # pnt = GEOSGeometry('{ "type": "Point", "coordinates": location}') # GeoJSON
-    qs = FiberBox.objects.filter(location__distance_lte=(pnt, D(km=1)))
+    qs = Fiberbox.objects.filter(location__distance_lte=(pnt, D(km=1)))
     points = serialize('geojson', qs)
     return HttpResponse(points,content_type='json')
 
 @login_required
 def fiberbox_draft_list(request):
-    boxes = FiberBox.objects.filter(
+    boxes = Fiberbox.objects.filter(
         published_date__isnull=True).order_by('updated_at')
     return render(request, 'reporter/fiberbox_draft_list.html', {'boxes': boxes})
 
 
 @login_required
 def fiberbox_publish(request, pk):
-    fiberbox = get_object_or_404(FiberBox, pk=pk)
+    fiberbox = get_object_or_404(Fiberbox, pk=pk)
     fiberbox.publish()
     return redirect('fiberbox_detail', pk=pk)
 
@@ -139,7 +139,7 @@ def fiberbox_publish(request, pk):
 @login_required
 def fiberbox_new(request):
     if request.method == "POST":
-        form = FiberBoxForm(request.POST)
+        form = FiberboxForm(request.POST)
         if form.is_valid():
             fiberbox = form.save(commit=False)
             fiberbox.author = request.user
@@ -147,19 +147,19 @@ def fiberbox_new(request):
             fiberbox.save()
             return redirect('fiberbox_detail', pk=fiberbox.pk)
     else:
-        form = FiberBoxForm()
+        form = FiberboxForm()
     return render(request, 'reporter/fiberbox_edit.html', {'form': form})
 
 
 def fiberbox_detail(request, pk):
-    box = get_object_or_404(FiberBox, pk=pk)
+    box = get_object_or_404(Fiberbox, pk=pk)
     return render(request, 'reporter/fiberbox_detail.html', {'box': box})
 
 @login_required
 def fiberbox_edit(request, pk):
-    box = get_object_or_404(FiberBox, pk=pk)
+    box = get_object_or_404(Fiberbox, pk=pk)
     if request.method == "POST":
-        form = FiberBoxForm(request.POST, instance=box)
+        form = FiberboxForm(request.POST, instance=box)
         if form.is_valid():
             box = form.save(commit=False)
             box.author = request.user
@@ -167,13 +167,13 @@ def fiberbox_edit(request, pk):
             box.save()
             return redirect('fiberbox_detail', pk=box.pk)
     else:
-        form = FiberBoxForm(instance=box)
+        form = FiberboxForm(instance=box)
     return render(request, 'reporter/fiberbox_edit.html', {'form': form})
 
 @login_required
 def fiberbox_remove(reques, pk):
     # delete a fiberbox
-    box = get_object_or_404(FiberBox, pk=pk)
+    box = get_object_or_404(Fiberbox, pk=pk)
     box.delete()
     return redirect('fiberbox_list')
 

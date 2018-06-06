@@ -3,7 +3,7 @@ from django.contrib.gis.utils import LayerMapping
 from .models import Counties
 
 from django.contrib.gis import geos
-from .models import FiberBox
+from .models import Fiberbox
 
 countie_mapping = {
     'counties' : 'Counties',

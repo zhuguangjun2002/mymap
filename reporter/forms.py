@@ -1,9 +1,10 @@
 from django import forms
-from .models import FiberBox
+from .models import Fiberbox
 
 
-class FiberBoxForm(forms.ModelForm):
+class FiberboxForm(forms.ModelForm):
 
     class Meta:
-        model =  FiberBox
+        model =  Fiberbox
         fields = ('name', 'town','village')
+
