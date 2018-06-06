@@ -83,7 +83,7 @@
 
 		});
 
-		var points = new L.GeoJSON.AJAX("{% url 'fiberbox_data' %}",{
+            var points = new L.GeoJSON.AJAX("{% url data_url %}",{
 			onEachFeature: function(feature,layer){
 				layer.bindPopup(feature.properties.name.toString())
 			}

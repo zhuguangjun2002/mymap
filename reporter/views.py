@@ -28,15 +28,24 @@ def fiberbox_list(request):
     return render(request, 'reporter/fiberbox_list.html', {'boxes': boxes})
 
 
+def fiberbox_map(request):
+    data_url = 'fiberbox_data'
+    context = {'data_url': data_url }
+    return render(request,'reporter/fiberbox_map.html',context)
+
+def fiberbox_publish_map(request):
+    data_url = 'fiberbox_publish_data'
+    context = {'data_url': data_url }
+    return render(request,'reporter/fiberbox_map.html',context)
+
+def fiberbox_draft_map(request):
+    data_url = 'fiberbox_draft_data'
+    context = {'data_url': data_url }
+    return render(request,'reporter/fiberbox_map.html',context)
+
 #@login_required
 class HomePageView(TemplateView):
     template_name =  'index.html'
-
-class MapPageView(TemplateView):
-    template_name =  'reporter/fiberbox_map.html'
-
-class DraftMapPageView(TemplateView):
-    template_name =  'reporter/fiberbox_draft_map.html'
 
 def county_datasets(request):
     counties = serialize('geojson',Counties.objects.all())
@@ -48,6 +57,14 @@ def fiberbox_data(request):
     # add field to only display name,
     # not show `updated_at`,`created-at`, `pk`
     points = serialize('geojson',Fiberbox.objects.all(),fields=('name','location'))
+    return HttpResponse(points,content_type='json')
+
+def fiberbox_publish_data(request):
+    # points = serialize('geojson', Fiberbox.objects.all())
+    # 控制生成的geojson,只包含客户感兴趣的字段。
+    # add field to only display name,
+    # not show `updated_at`,`created-at`, `pk`
+    points = serialize('geojson',Fiberbox.objects.filter(published_date__isnull=False),fields=('name','location'))
     return HttpResponse(points,content_type='json')
 
 def fiberbox_draft_data(request):
