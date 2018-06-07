@@ -1,7 +1,6 @@
 {% extends 'reporter/base.html' %}
 
 {% load static %}
-{% load leaflet_tags %}
 
 {% block extra_assets %}
     {% load leaflet_tags %}
@@ -9,7 +8,7 @@
     {% leaflet_css %} 
 	<link rel="stylesheet" type="text/css" href="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}">
 	<script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"> </script>
-	<!--<script type="text/javascript" src="{% static 'leaflet-ajax/dist/leaflet.ajax.js' %}"> </script>-->
+    <script type="text/javascript" src="{% static 'leaflet-ajax/dist/leaflet.ajax.js' %}"> </script>
 {% endblock extra_assets %}
 
 {% block content %}
@@ -28,67 +27,70 @@
         {% endif %}
         <p>街道办事处： {{ box.town|linebreaksbr }}</p>
         <p>村或社区委员会： {{ box.village|linebreaksbr }}</p>
-        <style type="text/css">
-            <!--确定MAP窗体的`宽度`和`高度`-->
-            <!--#gis {width: 80%;height: 800px;}-->
-            #gis {width: 40%;height: 400px;}
-        </style>
-        <script type="text/javascript">
-            function our_layers(map,options){
-                var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                maxZoom: 19
-                            });
-                var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                            maxZoom: 17
-                        });
-                var MapboxStreetMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                        maxZoom: 18,
-                        id: 'mapbox.streets',
-                        accessToken: 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'
-                    });
-                var MapboxSatelliteMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                        maxZoom: 18,
-                        id: 'mapbox.satellite',
-                        accessToken: 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'
-                    });
-
-                var geojsonFiberboxeLayer = new L.GeoJSON.AJAX("{% url 'fiberbox_data_detail' pk=box.pk %}",{
-                        onEachFeature: function(feature,layer){
-                            layer.bindPopup(feature.properties.name.toString())
-                        }
-                    });
-                geojsonFiberboxeLayer.addTo(map);
-                var google_satellite = new L.TileLayer.WMS('http://localhost:8082/geoserver/google/wms',{
-                    layers: 'google:google_chefoo',
-                    format: 'image/png',
-                    transparent: true
-                });
-                var baseLayers = {
-                    //"开放街道地图": osm,
-                    //"OpenTopoMap":OpenTopoMap,
-                    "开放地形图":OpenTopoMap,			// 一般我们不用开放地形地图
-                    //"Google Satellite": google_satellite
-                    //"谷歌卫星影像": google_satellite,  // google_satellite need to setup GeoServer Map.
-                    //"Mapbox街道地图": MapboxStreetMap,  // 不用Mapbox街道地图，除非`osm`限制我们使用。
-                    //"Mapbox卫星影像": MapboxSatelliteMap,
-
-
-                }
-                var groupedOverlays = {
-                  "设备类型": {
-                    "光钎箱": geojsonFiberboxeLayer
-                  }
-                };
-
-                // 我们想要使用`LEAFLET_CONFIG`中变量`TILES`，替换了`baseLayers`,
-                // 但是通过调试发现，如果取消`baseLayers`,只保留`groupedOverlays`,点击`光纤箱`，不能实现`显示`和`不显示`，这一必要功能。
-                // 所以，本次仍然保留`baseLayers`,虽然我们在配置文件`settings.py`中，使用了`LEAFLET_CONFIG`中变量`TILES`以及`OVERLAYS`。
-                L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
-                // 但是通过调试发现，如果取消`baseLayers`,只保留`groupedOverlays`,点击`光纤箱`，不能实现`显示`和`不显示`，这一必要功能。
-                // L.control.groupedLayers(groupedOverlays).addTo(map);
-            }
-        </script>
-        <h1>地点</h1>
-        {% leaflet_map "gis" callback="window.our_layers" %}
-        </div>
+    </div>
 {% endblock content %}
+
+{% block map_content  %}
+    <script type="text/javascript">
+        function our_layers(map,options){
+            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19
+                        });
+            var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 17
+                    });
+            var MapboxStreetMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'
+                });
+            var MapboxSatelliteMap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    maxZoom: 18,
+                    id: 'mapbox.satellite',
+                    accessToken: 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'
+                });
+
+            var geojsonFiberboxeLayer = new L.GeoJSON.AJAX("{% url 'fiberbox_data_detail' pk=box.pk %}",{
+                    onEachFeature: function(feature,layer){
+                        layer.bindPopup(feature.properties.name.toString())
+                    }
+                });
+            geojsonFiberboxeLayer.addTo(map);
+            var google_satellite = new L.TileLayer.WMS('http://localhost:8082/geoserver/google/wms',{
+                layers: 'google:google_chefoo',
+                format: 'image/png',
+                transparent: true
+            });
+            var baseLayers = {
+                //"开放街道地图": osm,
+                //"OpenTopoMap":OpenTopoMap,
+                "开放地形图":OpenTopoMap,			// 一般我们不用开放地形地图
+                //"Google Satellite": google_satellite
+                //"谷歌卫星影像": google_satellite,  // google_satellite need to setup GeoServer Map.
+                //"Mapbox街道地图": MapboxStreetMap,  // 不用Mapbox街道地图，除非`osm`限制我们使用。
+                //"Mapbox卫星影像": MapboxSatelliteMap,
+
+
+            }
+            var groupedOverlays = {
+              "设备类型": {
+                "光钎箱": geojsonFiberboxeLayer
+              }
+            };
+
+            // 我们想要使用`LEAFLET_CONFIG`中变量`TILES`，替换了`baseLayers`,
+            // 但是通过调试发现，如果取消`baseLayers`,只保留`groupedOverlays`,点击`光纤箱`，不能实现`显示`和`不显示`，这一必要功能。
+            // 所以，本次仍然保留`baseLayers`,虽然我们在配置文件`settings.py`中，使用了`LEAFLET_CONFIG`中变量`TILES`以及`OVERLAYS`。
+            L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+            // 但是通过调试发现，如果取消`baseLayers`,只保留`groupedOverlays`,点击`光纤箱`，不能实现`显示`和`不显示`，这一必要功能。
+            // L.control.groupedLayers(groupedOverlays).addTo(map);
+        }
+    </script>
+    <style type="text/css">
+        <!--确定MAP窗体的`宽度`和`高度`-->
+        <!--#gis {width: 80%;height: 800px;}-->
+        #gis {width: 40%;height: 400px;}
+    </style>
+    <p>地点</p>
+    {% leaflet_map "gis" callback="window.our_layers" %}
+{% endblock map_content  %}
