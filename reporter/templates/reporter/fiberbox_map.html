@@ -36,13 +36,35 @@
                     id: 'mapbox.satellite',
                     accessToken: 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'
                 });
-
+            function onEachFeature(feature, layer) {
+                var popupContent = ""
+        		if (feature.properties && feature.properties.name) {
+                    popupContent += "<p>设备名：";
+		        	popupContent += feature.properties.name;
+                    popupContent += "</p>";
+		        }
+        		if (feature.properties && feature.properties.town) {
+                    popupContent += "<p>街道办事处：";
+		        	popupContent += feature.properties.town;
+                    popupContent += "</p>";
+		        }
+                <!--`author`只能获得`pk`的值，无法有效序列化，直接获得其`名字`。-->
+                <!--if (feature.properties && feature.properties.author) {-->
+                    <!--popupContent += "<p>创建人：";-->
+					<!--popupContent += feature.properties.author;-->
+                    <!--popupContent += "</p>";-->
+				<!--}-->
+        		layer.bindPopup(popupContent);
+            }
             var geojsonFiberboxeLayer = new L.GeoJSON.AJAX("{% url data_url %}",{
-                    onEachFeature: function(feature,layer){
-                        layer.bindPopup(feature.properties.name.toString())
-                    }
+                    onEachFeature: onEachFeature,
                 });
 
+            <!--var geojsonFiberboxeLayer = new L.GeoJSON.AJAX("{% url data_url %}",{-->
+                    <!--onEachFeature: function(feature,layer){-->
+                        <!--layer.bindPopup(feature.properties.name.toString())-->
+                    <!--}-->
+                <!--});-->
             var google_satellite = new L.TileLayer.WMS('http://localhost:8082/geoserver/google/wms',{
                 layers: 'google:google_chefoo',
                 format: 'image/png',

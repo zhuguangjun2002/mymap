@@ -87,7 +87,14 @@ def fiberbox_publish_data(request):
     # 控制生成的geojson,只包含客户感兴趣的字段。
     # add field to only display name,
     # not show `updated_at`,`created-at`, `pk`
-    points = serialize('geojson',Fiberbox.objects.filter(published_date__isnull=False),fields=('name','location'))
+    #  添加`town`
+    points = serialize('geojson',
+                       Fiberbox.objects.filter(published_date__isnull=False),
+                       fields=('name','location','town'))
+    # 无法有效去取`author`,给出的是一个整数值。如果真的需要，需要做处理。
+    # points = serialize('geojson',
+                       # Fiberbox.objects.filter(published_date__isnull=False),
+                       # fields=('name','location','town','author'))
     return HttpResponse(points,content_type='json')
 
 @login_required
