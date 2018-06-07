@@ -39,20 +39,17 @@
                     accessToken: 'pk.eyJ1Ijoiemh1Z3VhbmdqdW4yMDAyIiwiYSI6ImNqYzFkNGl2ZjAwa2oyeW4yMGh0cTAxcHAifQ.bbY8ctOlYyb77S4P0VZ25A'
                 });
 
-            var fiberboxes = new L.GeoJSON.AJAX("{% url 'fiberbox_data_detail' pk=box.pk %}",{
+            var geojsonFiberboxeLayer = new L.GeoJSON.AJAX("{% url 'fiberbox_data_detail' pk=box.pk %}",{
                     onEachFeature: function(feature,layer){
                         layer.bindPopup(feature.properties.name.toString())
                     }
                 });
-
+            geojsonFiberboxeLayer.addTo(map);
             var google_satellite = new L.TileLayer.WMS('http://localhost:8082/geoserver/google/wms',{
                 layers: 'google:google_chefoo',
                 format: 'image/png',
                 transparent: true
             });
-
-            fiberboxes.addTo(map);
-
             var baseLayers = {
                 //"开放街道地图": osm,
                 //"OpenTopoMap":OpenTopoMap,
@@ -66,7 +63,7 @@
             }
             var groupedOverlays = {
               "Layers": {
-                "光钎箱": fiberboxes
+                "光钎箱": geojsonFiberboxeLayer
               }
             };
 
