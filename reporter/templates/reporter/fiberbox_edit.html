@@ -1,12 +1,12 @@
 {% extends 'reporter/base.html' %}
 
 {% load static %}
-{% load leaflet_tags %}
 
-{% block map_head %}
+{% block extra_assets %}
+    {% load leaflet_tags %}
     {% leaflet_js plugins="forms" %}
     {% leaflet_css plugins="forms" %}
-{% endblock %}
+{% endblock extra_assets %}
 
 {% block content %}
   <h1>创建新的光钎箱</h1>
@@ -14,5 +14,5 @@
     {{ form.as_p }}
     <button type="submit" class="save btn btn-default">Save</button>
   </form>
-{% endblock %}
+{% endblock content %}
 

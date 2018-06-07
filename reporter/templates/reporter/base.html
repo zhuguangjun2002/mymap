@@ -1,13 +1,15 @@
 {% load staticfiles %}
+
 <html>
     <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
         <title>中国移动设备管理系统</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="{% static 'css/reporter.css' %}">
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-        {% block map_head %}
-        {% endblock %}
+        {% block extra_assets %}
+        {% endblock extra_assets %}
     </head>
     <body>
         <div class="page-header">
@@ -27,12 +29,12 @@
             <div class="row">
                 <div class="col-md-8">
                     {% block content %}
-                    {% endblock %}
+                    {% endblock content %}
                 </div>
             </div>
         </div>
-        {% block map_body %}
-        {% endblock %}
+        {% block map_content %}
+        {% endblock map_content %}
     </body>
 </html>
 

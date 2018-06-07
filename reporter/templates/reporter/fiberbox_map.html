@@ -1,26 +1,22 @@
 {% extends 'reporter/base.html' %}
-{% load static %}
-{% load leaflet_tags %}
 
-{% block map_head %}
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+{% load static %}
+
+{% block extra_assets %}
+    {% load leaflet_tags %}
 	{% leaflet_js %}
 	{% leaflet_css %}
-	<title>Our Home</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}">
+	<script type="text/javascript" src="{% static 'leaflet-ajax/dist/leaflet.ajax.js' %}"> </script>
+	<script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"> </script>
+{% endblock extra_assets %}
+
+{% block map_content %}
 	<style type="text/css">
         <!--确定MAP窗体的`宽度`和`高度`-->
 		<!--#gis {width: 80%;height: 800px;}-->
 		#gis {width: 80%;height: 600px;}
 	</style>
-
-	<link rel="stylesheet" type="text/css" href="{% static 'routing/leaflet-routing-machine.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css' %}">
-	<script type="text/javascript" src="{% static 'dist/leaflet.ajax.js' %}"> </script>
-	<script type="text/javascript" src="{% static 'leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js' %}"> </script>
-	<script type="text/javascript" src="{% static 'routing/leaflet-routing-machine.js' %}"> </script>
-{% endblock %}
-
-{% block map_body %}
     <h3>欢迎使用中国移动公司设备维护网站！</h3>
     <script type="text/javascript">
         function our_layers(map,options){
@@ -63,8 +59,6 @@
                 //"谷歌卫星影像": google_satellite,  // google_satellite need to setup GeoServer Map.
                 //"Mapbox街道地图": MapboxStreetMap,  // 不用Mapbox街道地图，除非`osm`限制我们使用。
                 //"Mapbox卫星影像": MapboxSatelliteMap,
-
-
             }
             var groupedOverlays = {
               "设备类型": {
@@ -80,5 +74,5 @@
             // L.control.groupedLayers(groupedOverlays).addTo(map);
         }
     </script>
-{% leaflet_map "gis" callback="window.our_layers" %}
-{% endblock %}
+    {% leaflet_map "gis" callback="window.our_layers" %}
+{% endblock map_content %}
