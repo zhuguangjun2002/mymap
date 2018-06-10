@@ -153,7 +153,7 @@ LEAFLET_CONFIG = {
     #'DEFAULT_CENTER': (-.023,36.87), # nairobi
     #'SPATIAL_EXTENT': (119.5582,36.5732, 121.9295,38.4022),
     'DEFAULT_ZOOM': 8,
-    'MAX_ZOOOM': 20,
+    'MAX_ZOOM': 20,
     'MIN_ZOOM':3,
     #'SCALE': 'imperial'
     'SCALE': 'both',
