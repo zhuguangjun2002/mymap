@@ -3,10 +3,11 @@
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-        <title>中国移动设备管理系统</title>
+        <!--<title>中国移动设备管理系统</title>-->
+        <title>麦卡托智能设备管理平台</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/reporter.css' %}">
+        <link rel="stylesheet" href="{% static 'reporter/css/reporter.css' %}">
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         {% block extra_assets %}
         {% endblock extra_assets %}
@@ -23,7 +24,8 @@
             {% else %}
                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
-            <h1><a href="{% url 'fiberbox_publish_list' %}">中国移动设备管理系统</a></h1>
+            <!--<h1><a href="{% url 'fiberbox_publish_list' %}">中国移动设备管理系统</a></h1>-->
+            <h1><a href="{% url 'fiberbox_publish_list' %}">麦卡托智能设备管理平台</a></h1>
         </div>
         <div class="content container">
             <div class="row">
